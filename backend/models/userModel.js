@@ -20,6 +20,9 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    refreshToken: {
+        type: String
+    }
 });
 
 userSchema.pre('save', async function (next) {
