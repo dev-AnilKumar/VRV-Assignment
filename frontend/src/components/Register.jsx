@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     const initialformData = {
@@ -26,12 +27,10 @@ const Register = () => {
     const validateForm = () => {
         const newErrors = {};
 
-        // Name Validation
         if (!formData.name.trim()) {
             newErrors.name = 'Name is required';
         }
 
-        // Email Validation
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         if (!formData.email.trim()) {
             newErrors.email = 'Email is required';
@@ -39,14 +38,12 @@ const Register = () => {
             newErrors.email = 'Please enter a valid email';
         }
 
-        // Password Validation
         if (!formData.password.trim()) {
             newErrors.password = 'Password is required';
         } else if (formData.password.length < 6) {
             newErrors.password = 'Password must be at least 6 characters';
         }
 
-        // Confirm Password Validation
         if (formData.confirmPassword !== formData.password) {
             newErrors.confirmPassword = 'Passwords do not match';
         }
@@ -136,7 +133,7 @@ const Register = () => {
                 </form>
 
                 <div className="text-center text-sm">
-                    <p className="text-gray-600">Already have an account? <a href="#" className="text-indigo-600 hover:text-indigo-500">Login</a></p>
+                    <p className="text-gray-600">Already have an account? <Link to="/login" className="text-indigo-600 hover:text-indigo-500">Login</Link></p>
                 </div>
             </div>
         </div>

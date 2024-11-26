@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const initialformData = {
@@ -22,7 +23,6 @@ const Login = () => {
     const validateForm = () => {
         const newErrors = {};
 
-        // Email Validation
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         if (!formData.email.trim()) {
             newErrors.email = 'Email is required';
@@ -30,7 +30,6 @@ const Login = () => {
             newErrors.email = 'Please enter a valid email';
         }
 
-        // Password Validation
         if (!formData.password.trim()) {
             newErrors.password = 'Password is required';
         } else if (formData.password.length < 6) {
@@ -94,7 +93,7 @@ const Login = () => {
                 </form>
 
                 <div className="text-center text-sm">
-                    <p className="text-gray-600">Don't have an account? <a href="#" className="text-indigo-600 hover:text-indigo-500">Register</a></p>
+                    <p className="text-gray-600">Don't have an account? <Link to="/register" className="text-indigo-600 hover:text-indigo-500">Register</Link></p>
                 </div>
             </div>
         </div>

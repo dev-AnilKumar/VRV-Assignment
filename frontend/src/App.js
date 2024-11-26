@@ -1,10 +1,19 @@
 import React from 'react'
 import Register from './components/Register'
 import Login from './components/Login'
+import { Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
+import NotFound from './components/NotFound'
 
 const App = () => {
   return (
-    <Login />
+    <Routes>
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
+      <Route path='/' element={<Home />} />
+
+      <Route path='*' element={<NotFound />} />
+    </Routes>
   )
 }
 
