@@ -20,7 +20,7 @@ const loginUser = async (req, res) => {
     try {
         const user = await userModel.findOne({ email });
         if (user && await user.isPasswordMatch(password)) {
-            const refreshToken = generateRefreshToken({ id: user._id });
+            const refreshToken = generateRefreshToken(user._id, "3d");
             const updatedUser = await userModel.findByIdAndUpdate(user._id, {
                 refreshToken: refreshToken
             }, { new: true })
@@ -33,7 +33,7 @@ const loginUser = async (req, res) => {
                 _id: user?._id,
                 name: user?.name,
                 role: user?.role,
-                token: generateToken(user._id)
+                token: generateToken(user._id, "15m")
             })
         } else {
             throw new Error("Invalid Credentials");
@@ -43,6 +43,16 @@ const loginUser = async (req, res) => {
         console.log("Login User Error");
         console.log(error)
         res.json({ err: error.message, success: false })
+    }
+}
+
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await userModel.find();
+        res.json({ users, success: true })
+    } catch (error) {
+        console.log(error);
+        res.send({ msg: error.message, success: false })
     }
 }
 
@@ -70,4 +80,4 @@ const logout = async (req, res) => {
         res.json({ msg: error.message, success: true })
     }
 }
-module.exports = { registerUser, loginUser, logout }
+module.exports = { registerUser, loginUser, logout, getAllUsers }
