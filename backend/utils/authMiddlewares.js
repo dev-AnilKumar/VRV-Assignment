@@ -42,7 +42,7 @@ const authmiddleware = async (req, res, next) => {
 const notUser = async (req, res, next) => {
     const user = req.user;
     try {
-        if (user?.role != "Admin" || user?.role != "Super Admin") {
+        if (user?.role != "Admin" && user?.role != "Super Admin") {
             throw new Error("You are not Authorized");
         }
         next();
