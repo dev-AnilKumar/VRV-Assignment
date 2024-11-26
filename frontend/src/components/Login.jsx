@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
 const Login = () => {
-    const [formData, setFormData] = useState({
+    const initialformData = {
         email: '',
         password: '',
-    });
+    }
+    const [formData, setFormData] = useState(initialformData);
 
     const [errors, setErrors] = useState({
         email: '',
@@ -45,6 +46,7 @@ const Login = () => {
         if (validateForm()) {
             console.log('Form submitted:', formData);
             // You can replace this with an API call to submit form data
+            setFormData(initialformData)
         }
     };
 

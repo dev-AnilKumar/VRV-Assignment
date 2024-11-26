@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
 const Register = () => {
-    const [formData, setFormData] = useState({
+    const initialformData = {
         name: '',
         email: '',
         password: '',
         confirmPassword: '',
-    });
+    }
+    const [formData, setFormData] = useState(initialformData);
 
     const [errors, setErrors] = useState({
         name: '',
@@ -59,6 +60,7 @@ const Register = () => {
         if (validateForm()) {
             console.log('Form submitted:', formData);
             // You can replace this with API call to submit form data
+            setFormData(initialformData)
         }
     };
 
