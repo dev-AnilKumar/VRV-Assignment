@@ -46,7 +46,7 @@ const Home = () => {
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Name</th>
                 <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Role</th>
-                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Actions</th>
+                {userd.role != "User" && <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -54,18 +54,21 @@ const Home = () => {
                 <tr key={user.id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2 text-sm text-gray-900">{user.name}</td>
                   <td className="px-4 py-2 text-sm text-gray-900">{user.role}</td>
-                  <td className="px-4 py-2 text-sm text-gray-900 space-x-2">
-                    <button
-                      onClick={() => handleUpdate(user)}
-                      className="text-indigo-600 hover:text-indigo-800" >
-                      Update
-                    </button>
-                    <button
-                      onClick={() => handleDelete(user.id)}
-                      className="text-red-600 hover:text-red-800" >
-                      Delete
-                    </button>
-                  </td>
+                  {userd.role != "User" &&
+                    <td className="px-4 py-2 text-sm text-gray-900 space-x-2">
+                      <button
+                        onClick={() => handleUpdate(user)}
+                        className="text-indigo-600 hover:text-indigo-800" >
+                        Update
+                      </button>
+                      {userd.role === "Super Admin" &&
+                        <button
+                          onClick={() => handleDelete(user.id)}
+                          className="text-red-600 hover:text-red-800" >
+                          Delete
+                        </button>}
+                    </td>
+                  }
                 </tr>
               ))}
             </tbody>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const UpdateForm = ({ isOpen, onClose, user, onUpdate }) => {
+    const user = useSelector(state => state.auth.user)
     const [formData, setFormData] = useState({ name: '', role: '' });
 
     useEffect(() => {
@@ -55,8 +57,9 @@ const UpdateForm = ({ isOpen, onClose, user, onUpdate }) => {
                             required
                         >
                             <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                            <option value="super-admin">Super Admin</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Moderator">Moderator</option>
+                            {user.role === "Super Admin" && <option value="super-admin">Super Admin</option>}
                         </select>
                     </div>
 
