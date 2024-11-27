@@ -9,17 +9,15 @@ const Header = () => {
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        dispatch(logout);
+        dispatch(logout());
     };
 
     return (
         <header className="bg-white shadow-md">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center py-4">
-                    {/* Logo or brand name */}
-                    <div className="text-2xl font-bold text-indigo-600">Brand</div>
+                    <div className="text-2xl font-bold text-indigo-600">RBAC</div>
 
-                    {/* Desktop Navigation Links */}
                     <nav className="hidden md:flex space-x-8">
                         <Link to="/" className="text-gray-900 hover:text-indigo-600">Home</Link>
                         <Link to="/admin" className="text-gray-900 hover:text-indigo-600">Admin</Link>
@@ -28,7 +26,6 @@ const Header = () => {
                         <Link to="/lounge" className="text-gray-900 hover:text-indigo-600">Lounge</Link>
                     </nav>
 
-                    {/* Profile and Dropdown for Desktop */}
                     <div className="relative hidden md:block">
                         <button
                             className="flex items-center space-x-2 text-gray-900"
@@ -51,7 +48,6 @@ const Header = () => {
                             </svg>
                         </button>
 
-                        {/* Dropdown Menu */}
                         {dropdownOpen && (
                             <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
                                 <button
@@ -120,7 +116,6 @@ const Header = () => {
                                 Contact
                             </Link>
 
-                            {/* Logout Button in Mobile Menu */}
                             <button
                                 onClick={handleLogout}
                                 className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
