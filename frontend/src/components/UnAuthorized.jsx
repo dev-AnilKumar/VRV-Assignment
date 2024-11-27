@@ -15,9 +15,8 @@ const Unauthorized = () => {
                     Sorry, you don't have permission to access this page.
                 </p>
                 <div
-                    onClick={goback}  // Or any route where users can log in or get authenticated
-                    className="mt-6 text-indigo-600 hover:text-indigo-500 text-lg font-medium"
-                >
+                    onClick={goback}
+                    className="mt-6 text-indigo-600 cursor-pointer hover:text-indigo-500 text-lg font-medium">
                     Go Back
                 </div>
             </div>

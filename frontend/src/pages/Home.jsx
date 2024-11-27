@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Header from '../components/Header'
 import UpdateForm from '../components/UpdateForm';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
   const [users, setUsers] = useState([
@@ -8,6 +9,7 @@ const Home = () => {
     { id: 2, name: 'Jane Smith', role: 'Editor' },
     { id: 3, name: 'Mark Johnson', role: 'Viewer' },
   ]);
+  const userd = useSelector((state) => state.auth.user);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
