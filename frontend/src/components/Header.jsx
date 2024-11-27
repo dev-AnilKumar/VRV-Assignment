@@ -6,10 +6,10 @@ import { logout } from '../redux/authSlice';
 const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
 
     const handleLogout = () => {
-       dispatch(logout);
+        dispatch(logout);
     };
 
     return (

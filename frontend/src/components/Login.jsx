@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from "../api/axios";
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../redux/authSlice';
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useDispatch();
     const initialformData = {
         email: '',
         password: '',
@@ -14,6 +18,8 @@ const Login = () => {
         email: '',
         password: '',
     });
+
+    const from = location?.state?.from?.pathname || "/"
 
     const handleChange = (e) => {
         setFormData({
@@ -47,13 +53,16 @@ const Login = () => {
         try {
             if (validateForm()) {
                 console.log('Form submitted:', formData);
-                const response = await axios.post("/login", formData, {
+                const { data } = await axios.post("/login", formData, {
                     headers: { "Content-Type": "application/json" },
                     // withCredentials:true,
                 })
-                console.log(response)
-                if (response.data.success) {
-                    navigate("/")
+                console.log(data)
+                if (data.success) {
+                    dispatch(setCredentials(data?.user));
+                    navigate(from);
+                } else {
+                    throw new Error(data.err)
                 }
             }
         } catch (error) {

@@ -73,7 +73,8 @@ const logout = async (req, res) => {
                 secure: true,
                 maxAge: 0
             });
-            return res.sendStatus(204);     //forbidden
+            return res.sendStatus(204);
+            
         }
         await userModel.findByIdAndUpdate(user._id, {
             refreshToken: "",
@@ -83,7 +84,7 @@ const logout = async (req, res) => {
     } catch (error) {
         console.log("Logout Error");
         console.log(error)
-        res.json({ msg: error.message, success: true })
+        res.json({ msg: error.message, success: false })
     }
 }
 module.exports = { registerUser, loginUser, logout, getAllUsers }

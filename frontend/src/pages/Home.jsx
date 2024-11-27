@@ -57,14 +57,12 @@ const Home = () => {
                   <td className="px-4 py-2 text-sm text-gray-900 space-x-2">
                     <button
                       onClick={() => handleUpdate(user)}
-                      className="text-indigo-600 hover:text-indigo-800"
-                    >
+                      className="text-indigo-600 hover:text-indigo-800" >
                       Update
                     </button>
                     <button
                       onClick={() => handleDelete(user.id)}
-                      className="text-red-600 hover:text-red-800"
-                    >
+                      className="text-red-600 hover:text-red-800" >
                       Delete
                     </button>
                   </td>
@@ -88,14 +86,12 @@ const Home = () => {
                 <div className="flex justify-between space-x-2">
                   <button
                     onClick={() => handleUpdate(user.id)}
-                    className="text-indigo-600 hover:text-indigo-800"
-                  >
+                    className="text-indigo-600 hover:text-indigo-800" >
                     Update
                   </button>
                   <button
                     onClick={() => handleDelete(user.id)}
-                    className="text-red-600 hover:text-red-800"
-                  >
+                    className="text-red-600 hover:text-red-800" >
                     Delete
                   </button>
                 </div>
