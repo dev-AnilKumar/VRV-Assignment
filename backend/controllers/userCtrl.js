@@ -4,10 +4,12 @@ const { generateToken, generateRefreshToken } = require('../utils/authMiddleware
 const registerUser = async (req, res) => {
     const { email } = req.body;
     try {
-        const user = await userModel.findOne({ email });
+        req.body.email = email.toLowerCase();
+        const user = await userModel.findOne({ email: req.body.email });
+
         if (user) throw new Error("User Already Exists");
-        const newuser = await userModel.create(req.body);
-        res.json({ newuser, success: true });
+        await userModel.create(req.body);
+        res.json({ msg: "User Registered Successfully", success: true });
     } catch (error) {
         console.log("Register User Error");
         console.log(error)
@@ -18,22 +20,26 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
-        const user = await userModel.findOne({ email });
+        req.body.email = email.toLowerCase();
+        const user = await userModel.findOne({ email: req.body.email });
         if (user && await user.isPasswordMatch(password)) {
             const refreshToken = generateRefreshToken(user._id, "3d");
-            const updatedUser = await userModel.findByIdAndUpdate(user._id, {
+            await userModel.findByIdAndUpdate(user._id, {
                 refreshToken: refreshToken
             }, { new: true })
+
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
                 maxAge: 72 * 60 * 60 * 1000,
                 secure: true
             })
             res.json({
-                _id: user?._id,
-                name: user?.name,
-                role: user?.role,
-                token: generateToken(user._id, "15m")
+                user: {
+                    name: user?.name,
+                    role: user?.role,
+                    token: generateToken(user._id, "15m")
+                },
+                success: true
             })
         } else {
             throw new Error("Invalid Credentials");

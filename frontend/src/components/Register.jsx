@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "../api/axios";
 
 const Register = () => {
     const initialformData = {
@@ -16,6 +17,7 @@ const Register = () => {
         password: '',
         confirmPassword: '',
     });
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({
@@ -52,13 +54,26 @@ const Register = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateForm()) {
-            console.log('Form submitted:', formData);
-            // You can replace this with API call to submit form data
-            setFormData(initialformData)
+        try {
+            if (validateForm()) {
+                console.log('Form submitted:', formData);
+                const response = await axios.post("/register", formData, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    // withCredentials: true
+                })
+                console.log(response)
+                // You can replace this with API call to submit form data
+                setFormData(initialformData)
+                navigate("/login")
+            }
+        } catch (error) {
+            console.log(error)
         }
+
     };
 
     return (
