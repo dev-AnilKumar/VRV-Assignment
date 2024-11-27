@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logout } from '../redux/authSlice';
 
 const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const dispatch=useDispatch();
 
     const handleLogout = () => {
-        // Handle logout logic here (e.g., clear session, redirect)
+       dispatch(logout);
     };
 
     return (
@@ -53,8 +56,7 @@ const Header = () => {
                             <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
                                 <button
                                     onClick={handleLogout}
-                                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                                >
+                                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" >
                                     Logout
                                 </button>
                             </div>
@@ -65,8 +67,7 @@ const Header = () => {
                     {/* <span className="font-medium mr-3 md:hidden">John Doe</span> */}
                     <button
                         className="md:hidden text-gray-900 focus:outline-none"
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    >
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)} >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -91,36 +92,31 @@ const Header = () => {
                             <Link
                                 to="/"
                                 className="block px-4 py-2 text-gray-900 hover:text-indigo-600"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
+                                onClick={() => setMobileMenuOpen(false)} >
                                 Home
                             </Link>
                             <Link
                                 to="/about"
                                 className="block px-4 py-2 text-gray-900 hover:text-indigo-600"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
+                                onClick={() => setMobileMenuOpen(false)} >
                                 About
                             </Link>
                             <Link
                                 to="/services"
                                 className="block px-4 py-2 text-gray-900 hover:text-indigo-600"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
+                                onClick={() => setMobileMenuOpen(false)} >
                                 Services
                             </Link>
                             <Link
                                 to="/blog"
                                 className="block px-4 py-2 text-gray-900 hover:text-indigo-600"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
+                                onClick={() => setMobileMenuOpen(false)} >
                                 Blog
                             </Link>
                             <Link
                                 to="/contact"
                                 className="block px-4 py-2 text-gray-900 hover:text-indigo-600"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
+                                onClick={() => setMobileMenuOpen(false)} >
                                 Contact
                             </Link>
 
