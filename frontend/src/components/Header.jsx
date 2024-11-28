@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../redux/authSlice';
 
 const Header = () => {
+    const user = useSelector((state) => state.auth.user);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
@@ -16,14 +17,13 @@ const Header = () => {
         <header className="bg-white shadow-md">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center py-4">
-                    <div className="text-2xl font-bold text-indigo-600">RBAC</div>
+                    <div className="text-2xl font-bold text-indigo-600">VRV</div>
 
                     <nav className="hidden md:flex space-x-8">
                         <Link to="/" className="text-gray-900 hover:text-indigo-600">Home</Link>
                         <Link to="/admin" className="text-gray-900 hover:text-indigo-600">Admin</Link>
                         <Link to="/mod" className="text-gray-900 hover:text-indigo-600">Moderator</Link>
                         <Link to="/super-admin" className="text-gray-900 hover:text-indigo-600">Super Admin</Link>
-                        <Link to="/lounge" className="text-gray-900 hover:text-indigo-600">Lounge</Link>
                     </nav>
 
                     <div className="relative hidden md:block">
@@ -31,7 +31,7 @@ const Header = () => {
                             className="flex items-center space-x-2 text-gray-900"
                             onClick={() => setDropdownOpen(!dropdownOpen)}
                         >
-                            <span className="font-medium">John Doe</span>
+                            <span className="font-medium">{user.name}</span>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"

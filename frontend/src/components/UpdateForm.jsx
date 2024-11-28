@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-const UpdateForm = ({ isOpen, onClose, user, onUpdate }) => {
+const UpdateForm = ({ show, setShow, user }) => {
     const userd = useSelector(state => state.auth.user)
     const [formData, setFormData] = useState({ name: '', role: '' });
 
@@ -21,11 +21,11 @@ const UpdateForm = ({ isOpen, onClose, user, onUpdate }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onUpdate(formData);
-        onClose();
+        console.log(formData)
+        setShow(!show);
     };
 
-    if (!isOpen) return null;
+    if (!show) return null;
 
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
@@ -66,7 +66,7 @@ const UpdateForm = ({ isOpen, onClose, user, onUpdate }) => {
                     <div className="flex justify-end space-x-2">
                         <button
                             type="button"
-                            onClick={onClose}
+                            onClick={() => setShow(!show)}
                             className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
                         >
                             Cancel

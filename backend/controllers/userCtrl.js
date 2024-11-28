@@ -62,6 +62,33 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const updateUser = async (req, res) => {
+    const id = req.params;
+    try {
+        const updatedUser = await userModel.findByIdAndUpdate(id, {
+            name: req.body.name,
+            role: req.body.role
+        }, { new: true })
+        res.josn({ updatedUser, success: true })
+    } catch (error) {
+        console.log("Update User Error");
+        console.log(error);
+        res.send({ msg: error.message, success: false })
+    }
+}
+
+const deleteUser = async (req, res) => {
+    const id = req.params;
+    try {
+        const deletedUser = await userModel.findByIdAndDelete(id);
+        res.josn({ deletedUser, success: true })
+    } catch (error) {
+        console.log("Delete User Error");
+        console.log(error);
+        res.send({ msg: error.message, success: false })
+    }
+}
+
 const logout = async (req, res) => {
     const cookie = req.cookies;
     try {
@@ -74,8 +101,12 @@ const logout = async (req, res) => {
                 maxAge: 0
             });
             return res.sendStatus(204);
-            
         }
+        res.clearCookie('refreshToken', {
+            httpOnly: true,
+            secure: true,
+            maxAge: 0
+        });
         await userModel.findByIdAndUpdate(user._id, {
             refreshToken: "",
         });
@@ -87,4 +118,4 @@ const logout = async (req, res) => {
         res.json({ msg: error.message, success: false })
     }
 }
-module.exports = { registerUser, loginUser, logout, getAllUsers }
+module.exports = { registerUser, loginUser, logout, getAllUsers, updateUser, deleteUser }

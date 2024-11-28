@@ -11,12 +11,12 @@ const Home = () => {
   ]);
   const userd = useSelector((state) => state.auth.user);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [show, setShow] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
   const handleUpdate = (user) => {
     setCurrentUser(user);
-    setIsModalOpen(true);
+    setShow(!show);
   };
 
   const handleDelete = (id) => {
@@ -25,15 +25,13 @@ const Home = () => {
     setUsers(updatedUsers);
     alert(`Deleted user with ID: ${id}`);
   };
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-  const handleUpdateUser = (updatedData) => {
-    const updatedUsers = users.map((user) =>
-      user.id === currentUser.id ? { ...currentUser, ...updatedData } : user
-    );
-    setUsers(updatedUsers);
-  };
+
+  // const handleUpdateUser = (updatedData) => {
+  //   const updatedUsers = users.map((user) =>
+  //     user.id === currentUser.id ? { ...currentUser, ...updatedData } : user
+  //   );
+  //   setUsers(updatedUsers);
+  // };
 
   return (
     <div>
@@ -46,7 +44,7 @@ const Home = () => {
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Name</th>
                 <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Role</th>
-                {userd.role != "User" && <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Actions</th>}
+                {userd.role !== "User" && <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -54,7 +52,7 @@ const Home = () => {
                 <tr key={user.id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2 text-sm text-gray-900">{user.name}</td>
                   <td className="px-4 py-2 text-sm text-gray-900">{user.role}</td>
-                  {userd.role != "User" &&
+                  {userd.role !== "User" &&
                     <td className="px-4 py-2 text-sm text-gray-900 space-x-2">
                       <button
                         onClick={() => handleUpdate(user)}
@@ -88,7 +86,7 @@ const Home = () => {
                 </div>
                 <div className="flex justify-between space-x-2">
                   <button
-                    onClick={() => handleUpdate(user.id)}
+                    onClick={() => handleUpdate(user)}
                     className="text-indigo-600 hover:text-indigo-800" >
                     Update
                   </button>
@@ -104,10 +102,9 @@ const Home = () => {
         </div>
       </div>
       <UpdateForm
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
+        show={show}
+        setShow={setShow}
         user={currentUser}
-        onUpdate={handleUpdateUser}
       />
     </div>
   )
