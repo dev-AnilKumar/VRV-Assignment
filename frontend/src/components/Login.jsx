@@ -28,8 +28,9 @@ const Login = () => {
         });
     };
 
+
     const validateForm = () => {
-        const newErrors = {};
+        let newErrors = {};
 
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         if (!formData.email.trim()) {
@@ -55,20 +56,19 @@ const Login = () => {
                 console.log('Form submitted:', formData);
                 const { data } = await axios.post("/login", formData, {
                     headers: { "Content-Type": "application/json" },
-                    // withCredentials:true,
                 })
                 console.log(data)
                 if (data.success) {
                     dispatch(setCredentials(data?.user));
                     navigate(from);
+                    setFormData(initialformData);
                 } else {
                     throw new Error(data.err)
                 }
             }
         } catch (error) {
             console.log(error)
-        } finally {
-            setFormData(initialformData);
+            setErrors({ password: error.message })
         }
 
     };

@@ -54,7 +54,7 @@ const loginUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await userModel.find();
+        const users = await userModel.find().select("name").select("role").select("_id");
         res.json({ users, success: true })
     } catch (error) {
         console.log(error);

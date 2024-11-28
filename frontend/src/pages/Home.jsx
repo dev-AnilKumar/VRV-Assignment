@@ -1,15 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import UpdateForm from '../components/UpdateForm';
 import { useSelector } from 'react-redux';
+import axios from "../api/axios";
 
 const Home = () => {
-  const [users, setUsers] = useState([
-    { id: 1, name: 'John Doe', role: 'Admin' },
-    { id: 2, name: 'Jane Smith', role: 'Editor' },
-    { id: 3, name: 'Mark Johnson', role: 'Viewer' },
-  ]);
+  const [users, setUsers] = useState([]);
   const userd = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+    const getUsers = async () => {
+      try {
+        const { data } = await axios.get("/allusers", {
+          headers: { "Authorization": `Bearer ${token}` }
+        }, {
+          signal: controller.signal,
+          withCredentials: true
+        })
+        isMounted && setUsers(data?.users)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getUsers();
+    return () => {
+      isMounted = false;
+      controller.abort();
+    }
+  }, [])
 
   const [show, setShow] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -20,18 +41,11 @@ const Home = () => {
   };
 
   const handleDelete = (id) => {
-    // Handle delete logic here
     const updatedUsers = users.filter(user => user.id !== id);
     setUsers(updatedUsers);
     alert(`Deleted user with ID: ${id}`);
   };
 
-  // const handleUpdateUser = (updatedData) => {
-  //   const updatedUsers = users.map((user) =>
-  //     user.id === currentUser.id ? { ...currentUser, ...updatedData } : user
-  //   );
-  //   setUsers(updatedUsers);
-  // };
 
   return (
     <div>
@@ -48,34 +62,36 @@ const Home = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map(user => (
-                <tr key={user.id} className="border-t hover:bg-gray-50">
-                  <td className="px-4 py-2 text-sm text-gray-900">{user.name}</td>
-                  <td className="px-4 py-2 text-sm text-gray-900">{user.role}</td>
-                  {userd.role !== "User" &&
-                    <td className="px-4 py-2 text-sm text-gray-900 space-x-2">
-                      <button
-                        onClick={() => handleUpdate(user)}
-                        className="text-indigo-600 hover:text-indigo-800" >
-                        Update
-                      </button>
-                      {userd.role === "Super Admin" &&
+              {users.length === 0
+                ? <tr><td>No Users to display</td></tr>
+                : users.map(user => (
+                  <tr key={user._id} className="border-t hover:bg-gray-50">
+                    <td className="px-4 py-2 text-sm text-gray-900">{user.name}</td>
+                    <td className="px-4 py-2 text-sm text-gray-900">{user.role}</td>
+                    {userd.role !== "User" &&
+                      <td className="px-4 py-2 text-sm text-gray-900 space-x-2">
                         <button
-                          onClick={() => handleDelete(user.id)}
-                          className="text-red-600 hover:text-red-800" >
-                          Delete
-                        </button>}
-                    </td>
-                  }
-                </tr>
-              ))}
+                          onClick={() => handleUpdate(user)}
+                          className="text-indigo-600 hover:text-indigo-800" >
+                          Update
+                        </button>
+                        {userd.role === "Super Admin" &&
+                          <button
+                            onClick={() => handleDelete(user._id)}
+                            className="text-red-600 hover:text-red-800" >
+                            Delete
+                          </button>}
+                      </td>
+                    }
+                  </tr>
+                ))}
             </tbody>
           </table>
 
           {/* Mobile Responsive Layout */}
           <div className="md:hidden">
             {users.map(user => (
-              <div key={user.id} className="border-b p-4 space-y-2">
+              <div key={user._id} className="border-b p-4 space-y-2">
                 <div className="flex justify-between">
                   <span className="font-medium text-gray-900">Name:</span>
                   <span className="text-gray-800">{user.name}</span>
