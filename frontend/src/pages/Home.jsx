@@ -22,7 +22,6 @@ const Home = () => {
           signal: controller.signal,
           withCredentials: true
         })
-        console.log(data.users)
         isMounted && dispatch(setUsers(data?.users));
       } catch (error) {
         console.log(error)
@@ -54,7 +53,6 @@ const Home = () => {
         }, {
           withCredentials: true
         })
-        console.log(data)
         if (data.success) {
           dispatch(deleteUser(id));
           alert(`Deleted user with ID: ${id}`);

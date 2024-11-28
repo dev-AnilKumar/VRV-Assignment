@@ -26,7 +26,6 @@ const UpdateForm = ({ show, setShow, user }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
         if (!formData.name.trim()) {
             setError('Name is required');
         } else {
@@ -37,7 +36,6 @@ const UpdateForm = ({ show, setShow, user }) => {
                     }, {
                         withCredentials: true
                     })
-                    console.log(data)
                     if (data.success) {
                         dispatch(updateUser(formData));
                         setShow(!show);

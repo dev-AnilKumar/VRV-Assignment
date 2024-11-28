@@ -31,7 +31,7 @@ const Header = () => {
                             className="flex items-center space-x-2 text-gray-900"
                             onClick={() => setDropdownOpen(!dropdownOpen)}
                         >
-                            <span className="font-medium">{user.name}</span>
+                            <span className="font-medium capitalize">{user.name}</span>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"

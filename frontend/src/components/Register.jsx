@@ -58,17 +58,16 @@ const Register = () => {
         e.preventDefault();
         try {
             if (validateForm()) {
-                console.log('Form submitted:', formData);
                 const response = await axios.post("/register", formData, {
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     // withCredentials: true
                 })
-                console.log(response)
-                // You can replace this with API call to submit form data
-                setFormData(initialformData)
-                navigate("/login")
+                if (response.data.success) {
+                    setFormData(initialformData)
+                    navigate("/login")
+                }
             }
         } catch (error) {
             console.log(error)
