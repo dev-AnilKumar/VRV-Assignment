@@ -53,11 +53,9 @@ const Login = () => {
         e.preventDefault();
         try {
             if (validateForm()) {
-                console.log('Form submitted:', formData);
                 const { data } = await axios.post("/login", formData, {
                     headers: { "Content-Type": "application/json" },
-                },)
-                console.log(data)
+                });
                 if (data.success) {
                     dispatch(setCredentials(data?.user));
                     navigate(from);
