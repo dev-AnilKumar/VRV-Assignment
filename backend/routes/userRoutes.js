@@ -7,8 +7,8 @@ const router = express.Router();
 router.post("/register", registerUser)
 router.post("/login", loginUser)
 router.get("/allusers", authmiddleware, getAllUsers)
-router.put("/:id", updateUser)
-router.delete("/:id", deleteUser)
+router.put("/:id", authmiddleware, notUser, updateUser)
+router.delete("/:id", authmiddleware, isSuperAdmin, deleteUser)
 router.get("/logout", logout);
 
 module.exports = router

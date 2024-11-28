@@ -63,7 +63,7 @@ const Home = () => {
         console.log(error)
       }
     };
-    deleteUserd()
+    deleteUserd();
   };
 
 

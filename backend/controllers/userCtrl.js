@@ -31,7 +31,8 @@ const loginUser = async (req, res) => {
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
                 maxAge: 72 * 60 * 60 * 1000,
-                secure: true
+                secure: false,
+                sameSite: false,
             })
             res.json({
                 user: {
@@ -86,26 +87,30 @@ const deleteUser = async (req, res) => {
     } catch (error) {
         console.log("Delete User Error");
         console.log(error);
-        res.send({ msg: error.message, success: false });
+        res.json({ msg: error.message, success: false });
     }
 }
 
 const logout = async (req, res) => {
-    const cookie = req.cookies;
+    const refreshToken = req.cookies['refreshToken'];
+    console.log(refreshToken);
+    console.log(req.cookies)
     try {
-        if (!cookie?.refreshToken) throw new Error("No refresh Token in cookies");
-        const user = await userModel.findOne({ refreshToken: cookie?.refreshToken });
+        if (!refreshToken) throw new Error("No refresh Token in cookies");
+        const user = await userModel.findOne({ refreshToken: refreshToken });
+
         if (!user) {
             res.clearCookie('refreshToken', {
                 httpOnly: true,
-                secure: true,
-                maxAge: 0
+                // secure: true,
+                maxAge: 0,
+                sameSite: 'None',
             });
             return res.sendStatus(204);
         }
         res.clearCookie('refreshToken', {
             httpOnly: true,
-            secure: true,
+            // secure: true,
             maxAge: 0
         });
         await userModel.findByIdAndUpdate(user._id, {
