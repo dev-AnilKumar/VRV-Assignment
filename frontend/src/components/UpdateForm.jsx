@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../redux/authSlice';
+import axios from '../api/axios';
 
 const UpdateForm = ({ show, setShow, user }) => {
-    const userd = useSelector(state => state.auth.user)
-    const [formData, setFormData] = useState({ name: '', role: '' });
+    const dispatch = useDispatch();
+    const userd = useSelector(state => state.auth.user);
+    const token = useSelector((state) => state.auth.token);
+    const [formData, setFormData] = useState({ _id: "", name: '', role: '' });
+    const [error, setError] = useState("");
 
     useEffect(() => {
         if (user) {
-            setFormData({ name: user.name, role: user.role });
+            setFormData({ _id: user._id, name: user.name, role: user.role });
         }
     }, [user]);
 
@@ -21,8 +26,29 @@ const UpdateForm = ({ show, setShow, user }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
-        setShow(!show);
+        console.log(formData);
+        if (!formData.name.trim()) {
+            setError('Name is required');
+        } else {
+            const update = async () => {
+                try {
+                    const { data } = await axios.put(`/${formData._id}`, formData, {
+                        headers: { "Authorization": `Bearer ${token}` }
+                    }, {
+                        withCredentials: true
+                    })
+                    console.log(data)
+                    if (data.success) {
+                        dispatch(updateUser(formData));
+                        setShow(!show);
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            };
+            update();
+        }
+
     };
 
     if (!show) return null;
@@ -44,6 +70,7 @@ const UpdateForm = ({ show, setShow, user }) => {
                             placeholder="Enter user's name"
                             required
                         />
+                        {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
                     </div>
 
                     <div className="mb-4">
@@ -59,7 +86,7 @@ const UpdateForm = ({ show, setShow, user }) => {
                             <option value="user">User</option>
                             <option value="Admin">Admin</option>
                             <option value="Moderator">Moderator</option>
-                            {userd.role === "Super Admin" && <option value="super-admin">Super Admin</option>}
+                            {userd.role === "Super Admin" && <option value="Super Admin">Super Admin</option>}
                         </select>
                     </div>
 

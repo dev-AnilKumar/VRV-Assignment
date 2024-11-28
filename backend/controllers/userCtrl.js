@@ -63,13 +63,14 @@ const getAllUsers = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-    const id = req.params;
+    const { id } = req.params;
     try {
         const updatedUser = await userModel.findByIdAndUpdate(id, {
             name: req.body.name,
             role: req.body.role
-        }, { new: true })
-        res.josn({ updatedUser, success: true })
+        }, { new: true }).select("name").select("role").select("_id");
+
+        res.json({ updatedUser, success: true });
     } catch (error) {
         console.log("Update User Error");
         console.log(error);
@@ -78,14 +79,14 @@ const updateUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
-    const id = req.params;
+    const { id } = req.params;
     try {
         const deletedUser = await userModel.findByIdAndDelete(id);
-        res.josn({ deletedUser, success: true })
+        res.json({ success: true });
     } catch (error) {
         console.log("Delete User Error");
         console.log(error);
-        res.send({ msg: error.message, success: false })
+        res.send({ msg: error.message, success: false });
     }
 }
 

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import UpdateForm from '../components/UpdateForm';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from "../api/axios";
+import { deleteUser, setUsers } from '../redux/authSlice';
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
   const userd = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
+  const users = useSelector(state => state.auth.users);
 
   useEffect(() => {
     let isMounted = true;
@@ -20,17 +22,21 @@ const Home = () => {
           signal: controller.signal,
           withCredentials: true
         })
-        isMounted && setUsers(data?.users)
+        console.log(data.users)
+        isMounted && dispatch(setUsers(data?.users));
       } catch (error) {
         console.log(error)
       }
     }
-    getUsers();
+
+    if (users.length === 0) {
+      getUsers();
+    }
     return () => {
       isMounted = false;
       controller.abort();
     }
-  }, [])
+  }, [dispatch, token, users.length]);
 
   const [show, setShow] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -41,9 +47,23 @@ const Home = () => {
   };
 
   const handleDelete = (id) => {
-    const updatedUsers = users.filter(user => user.id !== id);
-    setUsers(updatedUsers);
-    alert(`Deleted user with ID: ${id}`);
+    const deleteUserd = async () => {
+      try {
+        const { data } = await axios.delete(`/${id}`, {
+          headers: { "Authorization": `Bearer ${token}` }
+        }, {
+          withCredentials: true
+        })
+        console.log(data)
+        if (data.success) {
+          dispatch(deleteUser(id));
+          alert(`Deleted user with ID: ${id}`);
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    };
+    deleteUserd()
   };
 
 
