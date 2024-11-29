@@ -1,70 +1,100 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# RBAC
 
-## Available Scripts
+A full-featured RBAC app with secure and user-friendly interface built with *React.js, **Redux,  **JWT,  **TailwindCss, **Node.js, **Express.js, and **MongoDB*, designed to manage access for users, admins, and super admins.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 1. User Side 👤
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-  *Read Users*: Users can browse only homepage, and view users.
 
-### `npm test`
+### 2. Admin Side 👤
+-  *Read and Update*: Admin can not only view users but also update them.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-  *Admin Page : Admin can browse Admin Page along with homepage.
 
-### `npm run build`
+### 3. Super Admin Side 👑
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-  *Permissions:  Super Admin can perform all functions like read, update and delete *.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-  *Super Admin Page*: Super admins can access Super Admin Page + homepage.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Tech Stack 💻
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+-  *Frontend*:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+-  *React.js*: Popular library for App.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+-  *Redux Toolkit*: Efficiently managing state of user.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- *JWT*: Secure authentication and authorization with JWT refresh and access tokens.
 
-## Learn More
+- *Tailwind Css*: Responsive and interactive user interface.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+-  *Backend*:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-  *Node.js* and *Express.js*: Server-side logic and API handling.
 
-### Code Splitting
+-  *Database*:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+-  *MongoDB *: Real-time database for storing user data.
 
-### Analyzing the Bundle Size
+  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Installation ⚙
 
-### Making a Progressive Web App
+  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Clone the repository:
 
-### Advanced Configuration
+git clone https://github.com/dev-AnilKumar/VRV-Assignment.git
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+cd  VRV-Assignment
+  
 
-### Deployment
+2. Install dependencies for both the frontend and backend:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- For the *frontend*:
 
-### `npm run build` fails to minify
+cd frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+npm install
+
+- For the *backend*:
+
+cd backend
+
+npm install
+
+3. Set up *env*:
+
+
+- Set Mongo connection string and JWT secret.
+
+4. Set up *axios.js and authSlice.js*:
+
+5. Run the app:
+
+  
+
+- Frontend:
+
+cd frontend
+
+npm start
+
+- Backend:
+
+cd backend
+
+npm start
+
+6. The app will run at:
+
+- Frontend: http://localhost:3000
+
+- Backend: http://localhost:5000
